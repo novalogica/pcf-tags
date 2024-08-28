@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<manifest>
+  <control 
+    namespace="novalogica" 
+    constructor="TagControl" 
+    version="0.0.1" 
+    display-name-key="Tags" 
+    description-key="Transform a single line text field into a tag component" 
+    control-type="standard" >
+    
+    <property 
+      name="tags" 
+      display-name-key="Tag Field" 
+      description-key="Select a single line text field" 
+      of-type="SingleLine.Text" 
+      usage="bound" 
+      required="true" />
+    
+    <resources>
+      <code path="index.ts" order="1"/>
+    </resources>
+  </control>
+</manifest>
