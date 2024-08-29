@@ -3,7 +3,7 @@
   <control 
     namespace="novalogica" 
     constructor="TagControl" 
-    version="0.0.1" 
+    version="1.0.0" 
     display-name-key="Tags" 
     description-key="Transform a single line text field into a tag component" 
     control-type="standard" >
@@ -15,9 +15,28 @@
       of-type="SingleLine.Text" 
       usage="bound" 
       required="true" />
+
+      <property 
+      name="tagsLimit" 
+      display-name-key="Tags Limit" 
+      description-key="You can set a limit for the tags you want to see" 
+      of-type="SingleLine.Text"
+      default-value='10' 
+      usage="input" 
+      required="false" />
+
+      <property 
+      name="tagsColor" 
+      display-name-key="Tags Background Color" 
+      description-key="" 
+      of-type="SingleLine.Text"
+      default-value='#38807b' 
+      usage="input" 
+      required="false" />
     
     <resources>
       <code path="index.ts" order="1"/>
+      <css path="styles/index.css" />
     </resources>
   </control>
 </manifest>

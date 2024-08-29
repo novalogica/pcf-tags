@@ -1,56 +1,43 @@
 import * as React from "react";
 import { useTag } from "../hooks/useTag";
-import { IBasePickerSuggestionsProps, ITag, TagPicker } from "@fluentui/react/lib/Pickers";
-import { useMemo } from "react";
+import { IPickerItemProps, ITag, TagPicker } from "@fluentui/react/lib/Pickers";
+import { useState } from "react";
+import Tag from "./Tag";
 
 export interface ITagProps {
     tags: ITag[] | undefined,
+    tagsLimit?: number,
+    tagBackgroundColor: string
     onTagsChanged: (tags: string) => void
 }
 
-const suggestionProps: IBasePickerSuggestionsProps = {
-    suggestionsHeaderText: 'Suggested tags',
-    noResultsFoundText: 'No color tags found',
-};
-
-
-const TagPickerComponent = ({ tags, onTagsChanged }: ITagProps) => {
-    const { tagList, onTagsUpdated, onResolveSuggestions } = useTag(tags);
+const TagPickerComponent = ({ tags, tagsLimit, tagBackgroundColor, onTagsChanged }: ITagProps) => {
+    const { tagList, onCreateTag, onTagsUpdated, onResolveSuggestions } = useTag(tags, tagsLimit);
     
-    const onKeyDown = (ev: React.KeyboardEvent<HTMLInputElement>) => {
-        if (ev.key != "Enter")
-            return;
-
-        ev.preventDefault();
-        const userInput = ev.currentTarget.value;
-
-        if (userInput.trim().length > 0) {
-            const newItem = { key: userInput, name: userInput };
-            const updatedItems = [...tagList, newItem];
-            onTagsUpdated(updatedItems);
-            handleTagsUpdate(updatedItems);
-        }
-    };
-
-    const handleTagsUpdate = (tags: ITag[]) => {
-        var mappedTags = tags.map((t) => t.key).join(',');
-        onTagsChanged(mappedTags);
+    const onInputChanged = (ev: React.KeyboardEvent<HTMLInputElement>) => {
+        const tags = onCreateTag(ev);
+        tags && onTagsChanged(tags)
     }
+
+    const onChange = (items?: ITag[]) => {
+        const tags = onTagsUpdated(items);
+        tags && onTagsChanged(tags)
+    };
 
     return (
         <TagPicker
             selectedItems={tagList}
-            onChange={onTagsUpdated}
+            onChange={onChange}
             onResolveSuggestions={onResolveSuggestions}
             getTextFromItem={(item: ITag) => item.name}
-            pickerSuggestionsProps={suggestionProps}
+            onRenderItem={(props: IPickerItemProps<ITag>) => <Tag key={props.key} {...props} backgroundColor={tagBackgroundColor} />}
+            pickerSuggestionsProps={{ suggestionsHeaderText: '', noResultsFoundText: '' }}
             inputProps={{
                 placeholder: "Type and press Enter to add a tag",
-                onKeyDown: onKeyDown,
+                onKeyDown: onInputChanged,
             }}
-            removeButtonAriaLabel="Remove"
         />
     );
 }
- 
+
 export default TagPickerComponent;

@@ -7,7 +7,7 @@ import { ITag } from "@fluentui/react";
 export class TagControl implements ComponentFramework.StandardControl<IInputs, IOutputs> {
     private container: HTMLDivElement;
     private notifyOutputChanged: () => void;
-    private tags: string;
+    private _tags: string;
 
     constructor()
     {
@@ -29,9 +29,12 @@ export class TagControl implements ComponentFramework.StandardControl<IInputs, I
     private renderControl(context: ComponentFramework.Context<IInputs>): void {
         const props: ITagProps  = {
             tags: this.handlePreviousTags(context.parameters.tags.raw ?? ""),
+            tagsLimit: context.parameters.tagsLimit.raw ? parseInt(context.parameters.tagsLimit.raw) : undefined,
+            tagBackgroundColor: context.parameters.tagsColor.raw ?? "#38807b",
             onTagsChanged: this.handleTagsUpdate
         }
 
+        this.handleTagsUpdate = this.handleTagsUpdate.bind(this);
         ReactDOM.render(React.createElement(TagPickerComponent, props), this.container);
     }
 
@@ -39,17 +42,18 @@ export class TagControl implements ComponentFramework.StandardControl<IInputs, I
         if(!tags)
             return;
 
+        this._tags = tags;
         return tags.split(',').map((tag) => ({ key: tag, name: tag}))
     }
 
-    private handleTagsUpdate(tags: string): void {
-        this.tags = tags;
+    public handleTagsUpdate(updatedsTags: string): void {
+        this._tags = updatedsTags;
         this.notifyOutputChanged();
     }
 
     public getOutputs(): IOutputs
     {
-        return { tags: this.tags  };
+        return { tags: this._tags  };
     }
 
     public destroy(): void

@@ -1,0 +1,33 @@
+.ms-BasePicker-itemsWrapper div {
+  border-radius: 4px !important;
+  padding: 2px !important;
+  color: white
+}
+
+.ms-BasePicker-itemsWrapper div:hover {
+  color: white
+}
+
+.ms-BasePicker-itemsWrapper div button {
+  color: white
+}
+
+.ms-BasePicker-itemsWrapper div button:hover {
+  background-color: transparent !important;
+  color: white;
+}
+
+.ms-BasePicker-itemsWrapper div button:focus {
+  background-color: transparent !important;
+  color: white !important;
+}
+
+.ms-BasePicker-itemsWrapper div button:active {
+  background-color: transparent;
+  color: white;
+}
+
+.ms-BasePicker-text {
+  border: 0;
+  padding: 8px;
+}
