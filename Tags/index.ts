@@ -1,8 +1,8 @@
 import * as React from "react";
 import * as ReactDOM from 'react-dom';
 import { IInputs, IOutputs } from "./generated/ManifestTypes";
-import TagPickerComponent, { ITagProps } from "./components/TagPicker";
 import { ITag } from "@fluentui/react";
+import TagsPicker, { ITagPickerProps } from "./components/TagPicker";
 
 export class TagControl implements ComponentFramework.StandardControl<IInputs, IOutputs> {
     private container: HTMLDivElement;
@@ -27,15 +27,15 @@ export class TagControl implements ComponentFramework.StandardControl<IInputs, I
     }
 
     private renderControl(context: ComponentFramework.Context<IInputs>): void {
-        const props: ITagProps  = {
+        const props: ITagPickerProps  = {
             tags: this.handlePreviousTags(context.parameters.tags.raw ?? ""),
             tagsLimit: context.parameters.tagsLimit.raw ? parseInt(context.parameters.tagsLimit.raw) : undefined,
-            tagBackgroundColor: context.parameters.tagsColor.raw ?? "#38807b",
-            onTagsChanged: this.handleTagsUpdate
+            tagBackgroundColor: context.parameters.tagsColor.raw ?? "#0F6CBD",
+            setOutput: this.handleTagsUpdate
         }
 
         this.handleTagsUpdate = this.handleTagsUpdate.bind(this);
-        ReactDOM.render(React.createElement(TagPickerComponent, props), this.container);
+        ReactDOM.render(React.createElement(TagsPicker, props), this.container);
     }
 
     private handlePreviousTags(tags: string): ITag[] | undefined {
@@ -43,11 +43,11 @@ export class TagControl implements ComponentFramework.StandardControl<IInputs, I
             return;
 
         this._tags = tags;
-        return tags.split(',').map((tag) => ({ key: tag, name: tag}))
+        return tags.split(', ').map((tag) => ({ key: tag, name: tag}))
     }
 
-    public handleTagsUpdate(updatedsTags: string): void {
-        this._tags = updatedsTags;
+    public handleTagsUpdate(updatedsTags?: string): void {
+        this._tags = updatedsTags ?? "";
         this.notifyOutputChanged();
     }
 

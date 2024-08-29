@@ -12,8 +12,9 @@ const Tag = (props: ITagProps) => {
         flexDirection: 'row', 
         backgroundColor: props.backgroundColor, 
         alignItems: 'center',
-        borderRadius: 8, 
-        marginRight: 8 ,
+        borderRadius: '8px', 
+        marginRight: 4,
+        marginTop: 4,
         cursor: 'pointer'
       }}>
         <span style={{ textAlign: 'center', paddingLeft: 8, paddingRight: 8 }}>{props.item.name}</span>

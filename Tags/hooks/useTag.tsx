@@ -1,38 +1,19 @@
 import { useState } from "react";
 import { ITag } from "@fluentui/react/lib/Pickers";
 
-export const useTag = (previousTags?: ITag[], tagsLimit?: number, ) => {
+export const useTag = (onNotifyOutput: (tags?: string) => void, previousTags?: ITag[], ) => {
     const [tagList, setTags] = useState<ITag[]>(previousTags ?? [])
 
-    const onCreateTag = (ev: React.KeyboardEvent<HTMLInputElement>): string | undefined => {
-        const userInput = ev.currentTarget.value;
-        
-        if (ev.key != "Enter" || userInput.trim().length <= 0 || (tagsLimit && tagList.length >= tagsLimit))
-            return;
-        
-        ev.preventDefault();
-        const tag = { key: userInput, name: userInput };
-
-        if(listContainsTag(tag))
-            return;
-
-        const updatedTags = [...tagList, tag];
-        setTags(updatedTags);
-        ev.currentTarget.value = "";
-        return updatedTags.map((t) => t.key).join(',');
-    };
-
-    const onTagsUpdated = (items?: ITag[]): string | undefined => {
-        if (!items) {
-            return;
-        }
-            
-        setTags(items);
-        return items.map((t) => t.key).join(',');
+    const onResolveSuggestions = async (filter: string, selectedItems: ITag[] | undefined): Promise<ITag[]> => {
+        return [];
     };
     
-    const onResolveSuggestions = (filter: string): ITag[] => {
-        return [];
+    const onTagChanged = (items?: ITag[] | undefined) => {
+        const uniqueItems = items?.filter((item, pos) => items.indexOf(item) == pos);
+        uniqueItems && setTags(uniqueItems)
+
+        const tagsInline = uniqueItems?.map(i => i.name).join(', ');
+        onNotifyOutput(tagsInline);
     };
 
     const listContainsTag = (tag: ITag) => {
@@ -45,8 +26,8 @@ export const useTag = (previousTags?: ITag[], tagsLimit?: number, ) => {
 
     return {
         tagList,
-        onCreateTag,
-        onTagsUpdated,
         onResolveSuggestions,
+        onTagChanged,
+        listContainsTag
     }
 }

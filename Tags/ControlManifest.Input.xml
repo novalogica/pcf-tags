@@ -30,7 +30,7 @@
       display-name-key="Tags Background Color" 
       description-key="" 
       of-type="SingleLine.Text"
-      default-value='#38807b' 
+      default-value='#0F6CBD' 
       usage="input" 
       required="false" />
     
