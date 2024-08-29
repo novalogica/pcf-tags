@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { createRef } from 'react';
 import TagSuggestionButton from './TagSuggestionButton';
-import { inputProps, toggleStyles } from '../styles/styles';
+import { inputProps, toggleStyles } from './styles';
 import { useTag } from '../hooks/useTag';
 import Tag from './Tag';
 import { IBasePicker, IBasePickerSuggestionsProps, IPickerItemProps, ITag, TagPicker, ValidationState } from '@fluentui/react/lib/Pickers';
