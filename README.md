@@ -2,6 +2,7 @@
 
 ![](https://github.com/novalogica/pcf-tags/blob/main/screenshots/tag_example.png)
 
+A Fluent UI control that seamlessly integrates with the Dynamics 365 (D365) appearance, allowing users to create tags from comma-separated text input. The control will dynamically adapt to the environment's color scheme, ensuring a consistent and cohesive user experience.
 
 ## Usage
 
