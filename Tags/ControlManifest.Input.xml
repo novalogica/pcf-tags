@@ -26,6 +26,15 @@
       required="false" />
 
       <property 
+      name="tagsDelimitor" 
+      display-name-key="Tags Delimitor" 
+      description-key="" 
+      of-type="SingleLine.Text"
+      default-value=',' 
+      usage="input" 
+      required="true" />
+
+      <property 
       name="tagsColor" 
       display-name-key="Tags Background Color" 
       description-key="" 

@@ -14,7 +14,7 @@ Once the control is added, you need to provide the following fields:
 | :---:   | :---: |
 | Tag Limit | Can be defined a tag limit for each record  |
 | Tag Background Color | Background color for the tag container   |
-
+| Tag Delimitor | Can be defined a character to split the tags  |
 
 
 ### Deploy

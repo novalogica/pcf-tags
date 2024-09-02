@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ITag } from "@fluentui/react/lib/Pickers";
 
-export const useTag = (onNotifyOutput: (tags?: string) => void, previousTags?: ITag[], ) => {
+export const useTag = (tagsDelimitor: string, onNotifyOutput: (tags?: string) => void, previousTags?: ITag[]) => {
     const [tagList, setTags] = useState<ITag[]>(previousTags ?? [])
 
     const onResolveSuggestions = async (filter: string, selectedItems: ITag[] | undefined): Promise<ITag[]> => {
@@ -12,7 +12,7 @@ export const useTag = (onNotifyOutput: (tags?: string) => void, previousTags?: I
         const uniqueItems = items?.filter((item, pos) => items.indexOf(item) == pos);
         uniqueItems && setTags(uniqueItems)
 
-        const tagsInline = uniqueItems?.map(i => i.name).join(', ');
+        const tagsInline = uniqueItems?.map(i => i.name).join(`${tagsDelimitor} `);
         onNotifyOutput(tagsInline);
     };
 

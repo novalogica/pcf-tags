@@ -9,14 +9,15 @@ import { IBasePicker, IBasePickerSuggestionsProps, IPickerItemProps, ITag, TagPi
 export interface ITagPickerProps {
     tags: ITag[] | undefined,
     tagsLimit?: number,
+    tagsDelimitor: string,
     tagBackgroundColor: string
     setOutput: (tags?: string) => void
 }
 
 const tagPickerRef = createRef<IBasePicker<ITag>>();
 
-const TagsPicker = ({ tags, tagsLimit, tagBackgroundColor, setOutput } : ITagPickerProps) => {
-  const { tagList, onTagChanged, onResolveSuggestions, listContainsTag } = useTag(setOutput, tags);
+const TagsPicker = ({ tags, tagsLimit, tagsDelimitor, tagBackgroundColor, setOutput } : ITagPickerProps) => {
+  const { tagList, onTagChanged, onResolveSuggestions, listContainsTag } = useTag(tagsDelimitor, setOutput, tags);
 
   const onRenderItem = (props: IPickerItemProps<ITag>) => {
     return <Tag key={props.key} {...props} backgroundColor={tagBackgroundColor} />

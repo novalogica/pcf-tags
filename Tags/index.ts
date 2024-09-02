@@ -27,9 +27,12 @@ export class TagControl implements ComponentFramework.StandardControl<IInputs, I
     }
 
     private renderControl(context: ComponentFramework.Context<IInputs>): void {
+        const delimitor = context.parameters.tagsDelimitor.raw ?? ',';
+
         const props: ITagPickerProps  = {
-            tags: this.handlePreviousTags(context.parameters.tags.raw ?? ""),
+            tags: this.handlePreviousTags(delimitor, context.parameters.tags.raw ?? ""),
             tagsLimit: context.parameters.tagsLimit.raw ? parseInt(context.parameters.tagsLimit.raw) : undefined,
+            tagsDelimitor: context.parameters.tagsDelimitor.raw ?? ',',
             tagBackgroundColor: context.parameters.tagsColor.raw ?? "#0F6CBD",
             setOutput: this.handleTagsUpdate
         }
@@ -38,12 +41,12 @@ export class TagControl implements ComponentFramework.StandardControl<IInputs, I
         ReactDOM.render(React.createElement(TagsPicker, props), this.container);
     }
 
-    private handlePreviousTags(tags: string): ITag[] | undefined {
+    private handlePreviousTags(delimitor: string, tags: string): ITag[] | undefined {
         if(!tags)
             return;
 
         this._tags = tags;
-        return tags.split(', ').map((tag) => ({ key: tag, name: tag}))
+        return tags.split(`${delimitor} `).map((tag) => ({ key: tag, name: tag}))
     }
 
     public handleTagsUpdate(updatedsTags?: string): void {
