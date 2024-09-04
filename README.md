@@ -8,13 +8,13 @@ A Fluent UI control that seamlessly integrates with the Dynamics 365 (D365) appe
 
 To use this control, you can add the custom control to a SingleLine.Text field.
 
-Once the control is added, you need to provide the following fields:
+Once the control is added, you can configure the following properties:
 
 | Property | Description    |
 | :---:   | :---: |
-| Tag Limit | Can be defined a tag limit for each record  |
-| Tag Background Color | Background color for the tag container   |
-| Tag Delimiter | Can be defined a character to split the tags  |
+| Tag Limit | Specifies the maximum number of tags that can be assigned to a record |
+| Tag Background Color | Sets the background color for the tag container |
+| Tag Delimiter | Determines the character or symbol used to separate individual tags within the data |
 
 
 ### Deploy
